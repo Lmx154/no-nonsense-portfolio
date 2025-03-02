@@ -253,83 +253,59 @@
 
   /* Footer */
   footer {
-    @apply bg-transparent-dark py-8 pb-4;
-  }
-
-  .footer-content {
-    @apply max-w-7xl mx-auto flex justify-around px-8 mb-8;
-  }
-
-  .contact-info, .social-links {
-    @apply flex-1;
-  }
-
-  .contact-info h3, .social-links h3 {
-    @apply mb-4 text-xl;
-  }
-
-  .social-icons {
-    @apply flex gap-6;
-  }
-
-  .social-icons a {
-    @apply text-white text-2xl transition-colors duration-300;
-  }
-
-  .social-icons a:hover {
-    @apply text-accent;
-  }
-
-  .copyright {
-    @apply text-center pt-4 border-t border-white/10 text-white/60;
-  }
-
-  /* Footer Styles */
-  footer {
-    background-color: var(--bg-secondary);
-    color: var(--text-primary);
-    padding-bottom: 20px;
+    @apply py-8 pb-4 relative w-full;
+    background: transparent; /* Remove background */
     position: relative;
-    width: 100%;
+    overflow: hidden;
   }
 
+  /* Remove the footer border that's causing the blue line */
   .footer-border {
-    height: 1px;
-    background-color: var(--accent-color);
-    width: 100%;
-    margin-bottom: 30px;
+    display: none;
   }
 
   .footer-content {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-    padding: 0 20px;
-  }
-
-  .contact-info, .social-links {
-    margin-bottom: 20px;
-  }
-
-  .social-icons {
-    display: flex;
-    gap: 15px;
-  }
-
-  .social-icons a {
-    color: var(--text-primary);
-    font-size: 24px;
-    transition: color 0.3s;
-  }
-
-  .social-icons a:hover {
-    color: var(--accent-color);
+    @apply max-w-7xl mx-auto flex justify-around px-8 mb-8 flex-wrap;
+    background: transparent; /* Ensure content is transparent */
   }
 
   .copyright {
-    text-align: center;
-    padding-top: 20px;
-    font-size: 14px;
+    @apply text-center pt-4 text-white/60 w-full;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+  }
+
+  /* Modal Styles */
+  .modal-container {
+    @apply fixed top-0 left-0 w-full h-full bg-black/80 z-50 justify-center items-center;
+    display: none; /* Hide by default */
+  }
+
+  .modal-container.active {
+    @apply flex;
+  }
+
+  .modal-content {
+    @apply bg-card-bg p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto relative;
+  }
+
+  .close-modal {
+    @apply absolute top-4 right-4 text-2xl cursor-pointer hover:text-accent;
+  }
+
+  #modal-title {
+    @apply text-2xl mb-6;
+  }
+
+  #modal-body h2 {
+    @apply text-xl mt-6 mb-3 text-accent;
+  }
+
+  #modal-body ul {
+    @apply list-disc pl-6 mb-4;
+  }
+
+  #modal-body li {
+    @apply mb-2;
   }
 
   /* Responsive Design */

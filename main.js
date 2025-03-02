@@ -107,6 +107,8 @@ document.addEventListener('DOMContentLoaded', () => {
     },
     retina_detect: true
   });
+  
+  cleanupFooter();
 });
 
 // Navigation
@@ -381,6 +383,7 @@ const projectDetails = {
 let modalContainer = document.createElement('div');
 modalContainer.id = 'project-modal';
 modalContainer.className = 'modal-container';
+modalContainer.style.display = 'none'; // Ensure it's hidden by default
 modalContainer.innerHTML = `
   <div class="modal-content">
     <span class="close-modal">&times;</span>
@@ -434,14 +437,49 @@ document.addEventListener('click', function(e) {
     if (project) {
       document.getElementById('modal-title').textContent = project.title;
       document.getElementById('modal-body').innerHTML = renderMarkdown(project.content);
-      document.getElementById('project-modal').style.display = 'flex';
+      const modal = document.getElementById('project-modal');
+      modal.classList.add('active');
+      modal.style.display = 'flex';
     }
   }
   
   if (e.target.classList.contains('close-modal') || e.target === document.getElementById('project-modal')) {
-    document.getElementById('project-modal').style.display = 'none';
+    const modal = document.getElementById('project-modal');
+    modal.classList.remove('active');
+    modal.style.display = 'none';
   }
 });
+
+// Function to remove unwanted elements from footer
+function cleanupFooter() {
+  const footer = document.querySelector('footer');
+  
+  // Check for any elements that might be the "x" button
+  const possibleXElements = footer.querySelectorAll('button, .close, .collapse, [class*="collapse"], [class*="toggle"]');
+  
+  possibleXElements.forEach(element => {
+    element.remove();
+  });
+  
+  // Also check for any elements positioned at bottom-left
+  const allFooterElements = footer.querySelectorAll('*');
+  allFooterElements.forEach(element => {
+    const style = window.getComputedStyle(element);
+    if (style.position === 'absolute' || style.position === 'fixed') {
+      if (style.bottom && style.left) {
+        element.remove();
+      }
+    }
+  });
+  
+  // Remove unwanted project-modal that might have been duplicated
+  const modalElements = document.querySelectorAll('#project-modal');
+  if (modalElements.length > 1) {
+    for (let i = 1; i < modalElements.length; i++) {
+      modalElements[i].remove();
+    }
+  }
+}
 
 // Initialize the page
 function init() {
@@ -451,6 +489,9 @@ function init() {
   
   // Animate welcome text on initial load
   animateWelcomeText();
+  
+  // Final cleanup to ensure no unwanted elements
+  cleanupFooter();
 }
 
 // Run initialization
