@@ -284,6 +284,54 @@
     @apply text-center pt-4 border-t border-white/10 text-white/60;
   }
 
+  /* Footer Styles */
+  footer {
+    background-color: var(--bg-secondary);
+    color: var(--text-primary);
+    padding-bottom: 20px;
+    position: relative;
+    width: 100%;
+  }
+
+  .footer-border {
+    height: 1px;
+    background-color: var(--accent-color);
+    width: 100%;
+    margin-bottom: 30px;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    padding: 0 20px;
+  }
+
+  .contact-info, .social-links {
+    margin-bottom: 20px;
+  }
+
+  .social-icons {
+    display: flex;
+    gap: 15px;
+  }
+
+  .social-icons a {
+    color: var(--text-primary);
+    font-size: 24px;
+    transition: color 0.3s;
+  }
+
+  .social-icons a:hover {
+    color: var(--accent-color);
+  }
+
+  .copyright {
+    text-align: center;
+    padding-top: 20px;
+    font-size: 14px;
+  }
+
   /* Responsive Design */
   @media (max-width: 768px) {
     .nav-content {
