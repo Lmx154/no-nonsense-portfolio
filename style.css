@@ -1,0 +1,309 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply font-sans text-white bg-primary min-h-screen overflow-x-hidden;
+  }
+}
+
+@layer components {
+  #particles-js {
+    @apply fixed w-full h-full top-0 left-0 -z-10;
+  }
+
+  /* Navigation */
+  #navbar {
+    @apply fixed top-0 left-0 w-full bg-transparent-dark backdrop-blur-md z-50 py-4;
+  }
+
+  .nav-content {
+    @apply max-w-7xl mx-auto flex justify-between items-center px-8;
+  }
+
+  .logo {
+    @apply text-2xl font-bold text-accent;
+  }
+
+  .nav-links {
+    @apply flex gap-8 list-none;
+  }
+
+  .nav-links a {
+    @apply text-white no-underline font-medium transition-colors duration-300;
+  }
+
+  .nav-links a:hover, .nav-links a.active {
+    @apply text-accent;
+  }
+
+  /* Main Content */
+  #content {
+    @apply pt-20 min-h-[calc(100vh-200px)];
+  }
+
+  .page {
+    @apply hidden max-w-7xl mx-auto px-8;
+  }
+
+  .page.active {
+    @apply block;
+  }
+
+  .page-title {
+    @apply text-5xl text-center mb-8 text-white;
+  }
+
+  /* Home Page */
+  #home {
+    @apply flex justify-center items-center h-[calc(100vh-200px)];
+  }
+
+  .welcome-container {
+    @apply text-center;
+  }
+
+  .welcome-text, .name-text, .role-text {
+    @apply opacity-0 translate-y-5;
+  }
+
+  .welcome-text {
+    @apply text-5xl mb-4;
+  }
+
+  .name-text {
+    @apply text-4xl mb-4;
+  }
+
+  .role-text {
+    @apply text-3xl text-accent;
+  }
+
+  /* Projects Page */
+  .projects-container {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-8;
+  }
+
+  .project-card {
+    @apply bg-card-bg border border-white/10 overflow-hidden flex flex-col;
+  }
+
+  .project-image {
+    @apply w-full h-[300px] overflow-hidden;
+  }
+
+  .project-image img {
+    @apply w-full h-full object-cover;
+  }
+
+  .project-info {
+    @apply p-6 flex-grow flex flex-col;
+  }
+
+  .project-info h3 {
+    @apply text-2xl mb-4;
+  }
+
+  .progress-bar {
+    @apply h-2 bg-white/10 mb-2;
+  }
+
+  .progress {
+    @apply h-full bg-success;
+  }
+
+  .status {
+    @apply text-right text-sm text-success mb-4;
+  }
+
+  .tech-stack {
+    @apply flex flex-wrap gap-2 mb-4;
+  }
+
+  .tech-tag {
+    @apply bg-accent/20 text-accent py-1 px-3;
+  }
+
+  .project-description {
+    @apply mb-6 flex-grow;
+  }
+
+  .project-footer {
+    @apply flex justify-between items-end;
+  }
+
+  .key-achievements h4 {
+    @apply text-base mb-1;
+  }
+
+  .see-more {
+    @apply text-accent no-underline text-sm;
+  }
+
+  .project-links {
+    @apply flex gap-4;
+  }
+
+  .live-link, .github-link {
+    @apply text-white no-underline flex items-center gap-2;
+  }
+
+  .live-link {
+    @apply bg-accent/20 py-2 px-4;
+  }
+
+  /* About Page */
+  .about-container {
+    @apply grid grid-cols-1 lg:grid-cols-2 gap-8;
+  }
+
+  .profile-section {
+    @apply bg-card-bg p-8 flex flex-col;
+  }
+
+  .profile-image {
+    @apply w-[150px] h-[150px] rounded-full overflow-hidden mx-auto mb-6;
+  }
+
+  .profile-image img {
+    @apply w-full h-full object-cover;
+  }
+
+  .skills-tags {
+    @apply flex gap-4 mb-6 justify-center;
+  }
+
+  .skill-tag {
+    @apply bg-accent/20 text-accent py-2 px-4 flex items-center gap-2;
+  }
+
+  .bio {
+    @apply mb-6;
+  }
+
+  .bio p {
+    @apply mb-4;
+  }
+
+  .download-resume {
+    @apply self-start bg-accent/20 text-white no-underline py-3 px-6 flex items-center gap-2;
+  }
+
+  .gallery-section {
+    @apply bg-card-bg p-8;
+  }
+
+  .gallery-image {
+    @apply relative w-full h-full overflow-hidden;
+  }
+
+  .gallery-image img {
+    @apply w-full h-full object-cover;
+  }
+
+  .image-caption {
+    @apply absolute bottom-0 left-0 w-full bg-black/70 p-3 text-xl;
+  }
+
+  /* Contact Page */
+  .contact-container {
+    @apply max-w-2xl mx-auto;
+  }
+
+  .contact-form {
+    @apply bg-card-bg p-8;
+  }
+
+  .form-group {
+    @apply mb-6;
+  }
+
+  .form-group label {
+    @apply block mb-2 text-white;
+  }
+
+  .form-group input, .form-group textarea {
+    @apply w-full py-3 px-4 bg-white/10 border-none text-white;
+  }
+
+  .form-group input::placeholder, .form-group textarea::placeholder {
+    @apply text-white/60;
+  }
+
+  .recaptcha {
+    @apply mb-6;
+  }
+
+  .g-recaptcha-placeholder {
+    @apply flex justify-between items-center bg-gray-100 p-4 rounded;
+  }
+
+  .checkbox {
+    @apply flex items-center gap-2 text-gray-800;
+  }
+
+  .recaptcha-logo {
+    @apply text-gray-800 font-bold;
+  }
+
+  .submit-btn {
+    @apply w-full py-4 bg-accent text-white border-none cursor-pointer text-base font-medium;
+  }
+
+  /* Footer */
+  footer {
+    @apply bg-transparent-dark py-8 pb-4;
+  }
+
+  .footer-content {
+    @apply max-w-7xl mx-auto flex justify-around px-8 mb-8;
+  }
+
+  .contact-info, .social-links {
+    @apply flex-1;
+  }
+
+  .contact-info h3, .social-links h3 {
+    @apply mb-4 text-xl;
+  }
+
+  .social-icons {
+    @apply flex gap-6;
+  }
+
+  .social-icons a {
+    @apply text-white text-2xl transition-colors duration-300;
+  }
+
+  .social-icons a:hover {
+    @apply text-accent;
+  }
+
+  .copyright {
+    @apply text-center pt-4 border-t border-white/10 text-white/60;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .nav-content {
+      @apply flex-col gap-4;
+    }
+    
+    .nav-links {
+      @apply w-full justify-between;
+    }
+    
+    .welcome-text {
+      @apply text-4xl;
+    }
+    
+    .name-text {
+      @apply text-3xl;
+    }
+    
+    .role-text {
+      @apply text-2xl;
+    }
+  }
+}
