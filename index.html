@@ -12,7 +12,6 @@
     
     <nav id="navbar">
       <div class="nav-content">
-        <div class="logo">LM</div>
         <ul class="nav-links">
           <li><a href="#" class="active" data-page="home">Home</a></li>
           <li><a href="#" data-page="projects">Projects</a></li>
@@ -427,7 +426,7 @@
     </main>
 
     <footer>
-      <div class="footer-content">
+      <div id="contact-footer" class="footer-content">
         <div class="contact-info">
           <h3>Contact Me</h3>
           <p>Email: Luis_Mtz907@live.com</p>
@@ -436,9 +435,16 @@
         <div class="social-links">
           <h3>Socials</h3>
           <div class="social-icons">
-            <a href="#" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-linkedin"></i></a>
-            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
+            <!-- Replace Font Awesome icons with SVG images from public folder -->
+            <a href="#" target="_blank" class="social-icon">
+              <img src="/github.svg" alt="GitHub" width="24" height="24">
+            </a>
+            <a href="#" target="_blank" class="social-icon">
+              <img src="/linkedin.svg" alt="LinkedIn" width="24" height="24">
+            </a>
+            <a href="#" target="_blank" class="social-icon">
+              <img src="/x.svg" alt="X" width="24" height="24">
+            </a>
           </div>
         </div>
       </div>
@@ -448,6 +454,7 @@
     </footer>
 
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vivus@latest/dist/vivus.min.js"></script>
     <script type="module" src="/main.js"></script>
   </body>
 </html>

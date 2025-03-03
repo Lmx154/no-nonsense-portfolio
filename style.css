@@ -5,6 +5,8 @@
 @layer base {
   body {
     @apply font-sans text-white bg-primary min-h-screen overflow-x-hidden;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    /* System font stack that works across all major platforms */
   }
 }
 
@@ -19,15 +21,17 @@
   }
 
   .nav-content {
-    @apply max-w-7xl mx-auto flex justify-between items-center px-8;
+    @apply max-w-7xl mx-auto flex justify-end items-center px-8; /* Changed from justify-center to justify-end */
   }
 
-  .logo {
+  /* Remove or comment out the logo styles since we're not using it anymore */
+  /* .logo {
     @apply text-2xl font-bold text-accent;
-  }
+  } */
 
   .nav-links {
     @apply flex gap-8 list-none;
+    margin-left: auto; /* Ensures alignment to the right */
   }
 
   .nav-links a {
@@ -36,6 +40,104 @@
 
   .nav-links a:hover, .nav-links a.active {
     @apply text-accent;
+  }
+
+  /* Remove all previous arrow styling */
+
+  /* New simple static arrow pointing to navbar */
+  .nav-guide {
+    position: fixed;
+    top: 45px;
+    right: 230px;
+    z-index: 40;
+    pointer-events: none; /* Ensure it doesn't interfere with clicks */
+    display: none; /* Hidden by default, shown only on home page via JS */
+  }
+
+  .nav-guide svg {
+    width: 80px;
+    height: 40px;
+    filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.5));
+  }
+
+  /* Fixed arrow styling - simplified and more visible */
+  .nav-arrow {
+    position: fixed;
+    top: 40px;
+    right: 230px;
+    width: 180px;
+    height: 180px;
+    z-index: 45;
+    pointer-events: none;
+    display: none;
+    transform: rotate(-25deg);
+  }
+
+  .nav-arrow.visible {
+    display: block;
+  }
+
+  .nav-arrow svg {
+    width: 100%;
+    height: 100%;
+  }
+
+  /* Stroke animation styling */
+  .nav-arrow path.arrow-shaft {
+    stroke: white;
+    stroke-width: 4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 500;
+    stroke-dashoffset: 500;
+    animation: draw-shaft 1.5s ease-in-out forwards;
+  }
+
+  .nav-arrow path.arrow-head {
+    stroke: white;
+    stroke-width: 4;
+    fill: none;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-dasharray: 100;
+    stroke-dashoffset: 100;
+    opacity: 0;
+    animation: draw-head 1s ease-in-out forwards;
+    animation-delay: 1.3s; /* Start after shaft is mostly drawn */
+  }
+
+  /* Drawing animations */
+  @keyframes draw-shaft {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  @keyframes draw-head {
+    0% {
+      opacity: 1;
+      stroke-dashoffset: 100;
+    }
+    100% {
+      opacity: 1;
+      stroke-dashoffset: 0;
+    }
+  }
+
+  /* Add bounce animation after drawing is complete */
+  .nav-arrow.completed {
+    animation: arrow-bounce 2s ease-in-out infinite;
+    animation-delay: 2.5s; /* Start bounce after drawing completes */
+  }
+
+  @keyframes arrow-bounce {
+    0%, 100% {
+      transform: rotate(-25deg) translateY(0);
+    }
+    50% {
+      transform: rotate(-25deg) translateY(-10px);
+    }
   }
 
   /* Main Content */
@@ -55,17 +157,23 @@
     @apply text-5xl text-center mb-8 text-white;
   }
 
-  /* Home Page */
+  /* Home Page - Updated with centered left-aligned text */
   #home {
-    @apply flex justify-center items-center h-[calc(100vh-200px)];
+    @apply flex justify-center items-center h-[calc(100vh-200px)]; /* Back to center alignment */
+    padding-left: 0; /* Remove the previous padding */
   }
 
   .welcome-container {
-    @apply text-center;
+    @apply text-left; /* Keep the text left-aligned */
+    max-width: 600px; /* Maintain width limit */
+    margin-right: auto; /* Reset auto margins */
+    margin-left: auto;
   }
 
   .welcome-text, .name-text, .role-text {
-    @apply opacity-0 translate-y-5;
+    opacity: 1; /* Start fully visible */
+    transform: none; /* No transform */
+    transition: none; /* No transition */
   }
 
   .welcome-text {
@@ -77,7 +185,58 @@
   }
 
   .role-text {
-    @apply text-3xl text-accent;
+    @apply text-3xl;
+    opacity: 1 !important; /* Force visibility */
+    min-height: 3rem;
+    line-height: 1.5;
+    position: relative;
+    text-align: left; /* Change to left alignment to match container */
+  }
+
+  /* Container for the typing effect */
+  .typewriter-container {
+    position: relative;
+    display: inline-block;
+    margin: 0 auto;
+    height: 3rem;
+    /* Set a fixed width that accommodates the longest word plus some extra space */
+    width: 300px; /* Adjust based on your longest role */
+    text-align: left;
+  }
+
+  /* Static part "I'm a " */
+  .static-text {
+    display: inline-block; 
+    position: static; /* Change from absolute to static */
+    color: #fff;
+    margin-right: 5px; /* Consistent spacing */
+  }
+
+  /* Dynamic part that changes */
+  .dynamic-text {
+    display: inline-block;
+    position: static; /* Change from absolute to static */
+    color: var(--accent-color, #64ffda);
+    margin-left: 5px; /* Add a small gap between "I'm a" and the dynamic text */
+  }
+
+  /* Cursor style */
+  .cursor {
+    display: inline-block;
+    width: 2px;
+    height: 1.2em;
+    background-color: var(--accent-color, #64ffda);
+    margin-left: 1px;
+    vertical-align: middle;
+    animation: cursor-blink 0.8s step-end infinite;
+    /* Remove absolute positioning */
+    position: relative;
+    top: 0;
+  }
+
+  @keyframes cursor-blink {
+    from, to { opacity: 1; }
+    50% { opacity: 0; }
   }
 
   /* Projects Page */
@@ -253,25 +412,21 @@
 
   /* Footer */
   footer {
-    @apply py-8 pb-4 relative w-full;
-    background: transparent; /* Remove background */
+    @apply py-4 pb-4 relative w-full;
+    background: transparent;
     position: relative;
     overflow: hidden;
   }
 
-  /* Remove the footer border that's causing the blue line */
-  .footer-border {
-    display: none;
-  }
-
   .footer-content {
     @apply max-w-7xl mx-auto flex justify-around px-8 mb-8 flex-wrap;
-    background: transparent; /* Ensure content is transparent */
+    background: transparent;
+    display: none; /* Hide by default */
   }
 
   .copyright {
     @apply text-center pt-4 text-white/60 w-full;
-    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator */
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
   }
 
   /* Modal Styles */
@@ -306,6 +461,25 @@
 
   #modal-body li {
     @apply mb-2;
+  }
+
+  /* Updated social icons styling */
+  .social-icons {
+    @apply flex gap-6 justify-center mt-3;
+  }
+
+  .social-icon {
+    @apply transition-transform hover:scale-110;
+    opacity: 0.9;
+  }
+
+  .social-icon:hover {
+    opacity: 1;
+  }
+
+  .social-icon img {
+    @apply w-6 h-6;
+    filter: brightness(1);
   }
 
   /* Responsive Design */

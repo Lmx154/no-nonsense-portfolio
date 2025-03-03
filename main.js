@@ -111,7 +111,7 @@ document.addEventListener('DOMContentLoaded', () => {
   cleanupFooter();
 });
 
-// Navigation
+// Navigation with footer visibility control
 const navLinks = document.querySelectorAll('.nav-links a');
 const pages = document.querySelectorAll('.page');
 
@@ -130,6 +130,14 @@ navLinks.forEach(link => {
     const pageName = link.getAttribute('data-page');
     document.getElementById(pageName).classList.add('active');
     
+    // Toggle contact footer visibility based on current page
+    const contactFooter = document.getElementById('contact-footer');
+    if (pageName === 'contact') {
+      contactFooter.style.display = 'flex';
+    } else {
+      contactFooter.style.display = 'none';
+    }
+    
     // If home page is active, animate welcome text
     if (pageName === 'home') {
       animateWelcomeText();
@@ -137,45 +145,99 @@ navLinks.forEach(link => {
   });
 });
 
-// Welcome page text animation
+// Define roles for typewriter effect and ensure container is sized for longest word
+const roles = ["software engineer", "tech enthusiast", "student"];
+
+// Improved welcome text function with working typewriter
 function animateWelcomeText() {
   const welcomeText = document.getElementById('welcome-text');
   const nameText = document.getElementById('name-text');
   const roleText = document.getElementById('role-text');
   
-  // Reset text content and styles
+  // Set text content directly
   welcomeText.textContent = 'Welcome! 👋';
   nameText.textContent = 'My name is Luis';
-  roleText.textContent = "I'm a software engineer";
   
-  welcomeText.style.opacity = '0';
-  nameText.style.opacity = '0';
-  roleText.style.opacity = '0';
+  // Debug output
+  console.log('Setting up typewriter effect');
   
-  welcomeText.style.transform = 'translateY(20px)';
-  nameText.style.transform = 'translateY(20px)';
-  roleText.style.transform = 'translateY(20px)';
+  // Setup typewriter container with proper visibility
+  const longestRole = "software engineer     "; // Added extra spaces for safety
+  const containerWidthNeeded = (("I'm a").length + longestRole.length) * 14;
   
-  // Animate welcome text
+  // Set up typewriter container
+  roleText.innerHTML = `
+    <div class="typewriter-container" style="min-width: ${containerWidthNeeded}px;">
+      <span class="static-text">I'm a</span>
+      <span class="dynamic-text"></span><span class="cursor"></span>
+    </div>
+  `;
+  
+  // Ensure the container is visible by forcing visibility with inline styles
+  roleText.style.opacity = '1';
+  roleText.style.visibility = 'visible';
+  
+  // Start typewriter animation with a small delay to ensure DOM is ready
   setTimeout(() => {
-    welcomeText.style.transition = 'opacity 1s, transform 1s';
-    welcomeText.style.opacity = '1';
-    welcomeText.style.transform = 'translateY(0)';
+    console.log('Starting typewriter effect');
+    startTypewriterEffect();
+  }, 100);
+}
+
+// Modified typewriter implementation with debug logging
+function startTypewriterEffect() {
+  const dynamicText = document.querySelector('.dynamic-text');
+  
+  // Check if we found the element
+  if (!dynamicText) {
+    console.error('Dynamic text element not found');
+    return;
+  }
+  
+  console.log('Dynamic text element found:', dynamicText);
+  
+  let currentRoleIndex = 0;
+  let isDeleting = false;
+  let charIndex = 0;
+  
+  function type() {
+    const currentRole = roles[currentRoleIndex];
+    console.log('Typing:', currentRole, 'at index:', charIndex, 'deleting:', isDeleting);
     
-    // Animate name text
-    setTimeout(() => {
-      nameText.style.transition = 'opacity 1s, transform 1s';
-      nameText.style.opacity = '1';
-      nameText.style.transform = 'translateY(0)';
-      
-      // Animate role text
+    if (isDeleting) {
+      charIndex--;
+      dynamicText.textContent = currentRole.substring(0, charIndex);
+    } else {
+      dynamicText.textContent = currentRole.substring(0, charIndex + 1);
+      charIndex++;
+    }
+    
+    // Typing speed
+    const typingSpeed = isDeleting ? 30 : 70;
+    
+    // If finished typing the current role
+    if (!isDeleting && charIndex === currentRole.length) {
       setTimeout(() => {
-        roleText.style.transition = 'opacity 1s, transform 1s';
-        roleText.style.opacity = '1';
-        roleText.style.transform = 'translateY(0)';
-      }, 1000);
-    }, 1000);
-  }, 500);
+        isDeleting = true;
+        type();
+      }, 1200);
+      return;
+    }
+    
+    // If finished deleting the current role
+    if (isDeleting && charIndex === 0) {
+      isDeleting = false;
+      currentRoleIndex = (currentRoleIndex + 1) % roles.length;
+      setTimeout(type, 300);
+      return;
+    }
+    
+    // Continue typing or deleting
+    setTimeout(type, typingSpeed);
+  }
+  
+  // Start the effect
+  type();
 }
 
 // Contact form submission
@@ -481,17 +543,84 @@ function cleanupFooter() {
   }
 }
 
-// Initialize the page
+// CSS animation-based arrow with clockwise-rotated arrowhead
+function setupArrow() {
+  // Create container for arrow
+  const arrowContainer = document.createElement('div');
+  arrowContainer.className = 'nav-arrow';
+  arrowContainer.id = 'nav-arrow';
+  
+  // SVG with paths that will be animated via CSS - arrowhead rotated more clockwise
+  arrowContainer.innerHTML = `
+    <svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+      <!-- Arrow shaft -->
+      <path class="arrow-shaft" d="M10,70 Q50,10 170,30" />
+      <!-- Arrow head - adjusted to have more clockwise rotation -->
+      <path class="arrow-head" d="M145,30 L170,30 L160,55" />
+    </svg>
+  `;
+  
+  document.body.appendChild(arrowContainer);
+  
+  // Function to show and animate arrow
+  function showArrow() {
+    const homePage = document.getElementById('home');
+    if (homePage && homePage.classList.contains('active')) {
+      // Reset animations by removing and re-adding the element
+      const oldArrow = document.getElementById('nav-arrow');
+      if (oldArrow) {
+        oldArrow.remove();
+      }
+      
+      // Create a fresh arrow
+      document.body.appendChild(arrowContainer);
+      
+      // Make visible and add completed class after animation time
+      arrowContainer.classList.add('visible');
+      
+      // Add completed class after animation finishes
+      setTimeout(() => {
+        arrowContainer.classList.add('completed');
+      }, 2500); // Time after both animations complete
+      
+      console.log('Arrow shown and animation started');
+    } else {
+      arrowContainer.classList.remove('visible', 'completed');
+    }
+  }
+  
+  // Listen for page changes
+  navLinks.forEach(link => {
+    link.addEventListener('click', () => {
+      console.log('Navigation clicked, checking if home page');
+      setTimeout(showArrow, 100);
+    });
+  });
+  
+  // Show on initial page load
+  showArrow();
+}
+
+// Update the init function to use our new arrow function
 function init() {
   // Show home page by default
   document.getElementById('home').classList.add('active');
   document.querySelector('[data-page="home"]').classList.add('active');
   
+  // Hide contact footer initially
+  const contactFooter = document.getElementById('contact-footer');
+  if (contactFooter) {
+    contactFooter.style.display = 'none';
+  }
+  
   // Animate welcome text on initial load
   animateWelcomeText();
   
-  // Final cleanup to ensure no unwanted elements
+  // Final cleanup
   cleanupFooter();
+  
+  // Setup the arrow with Vivus animation
+  setupArrow();
 }
 
 // Run initialization
